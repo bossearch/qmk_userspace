@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
  [0] = LAYOUT_split_3x6_3(
-    LT(3,KC_TAB)KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, QK_GESC, 
+    LT(3,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, QK_GESC, 
     KC_MEH, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, 
     KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_ENT, 
     KC_LGUI, KC_LSFT, LT(1,KC_SPC), LT(2,KC_BSPC), KC_RSFT, KC_LALT
@@ -50,9 +50,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 };
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-return update_tri_layer_state(state, 1, 2, 3);
-};
+// layer_state_t layer_state_set_user(layer_state_t state) {
+// return update_tri_layer_state(state, 1, 2, 3);
+// };
 
 // Shift + Backspace = Delete
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LT(2,KC_BSPC), KC_DEL);
