@@ -1,7 +1,8 @@
 #include QMK_KEYBOARD_H
-// #include "combos.c"
+
 #include "layers.h"
 #include "oled.c"
+#include "macros.c"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -15,7 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_SYM] = LAYOUT_split_3x6_3(
     KC_TAB, KC_EXLM, KC_AT, KC_HASH, KC_LBRC, KC_PSLS, KC_BSLS, KC_RBRC, KC_PMNS, KC_PPLS, KC_PEQL, KC_GRV,
     MEH(KC_NO), KC_AMPR, KC_DLR, KC_PERC, KC_LPRN, KC_UNDS, KC_PIPE, KC_RPRN, KC_CIRC, KC_PAST, KC_COLN, KC_DQUO,
-    KC_LCTL, KC_NO, KC_NO, KC_NO, KC_LCBR, KC_LT, KC_GT, KC_RCBR, KC_NO, KC_NO, KC_NO, KC_ENT,
+    KC_LCTL, MCR0, MCR1, MCR2, KC_LCBR, KC_LT, KC_GT, KC_RCBR, KC_NO, KC_NO, KC_NO, KC_ENT,
     KC_LGUI, KC_LSFT, KC_TRNS, LT(_NUM,KC_BSPC), KC_RSFT, KC_LALT
     ),
 
@@ -35,9 +36,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_GAME] = LAYOUT_split_3x6_3(
     KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, QK_GESC,
-    TG(_QWERTY), KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
+    KC_MEH, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
     KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_ENT,
-    KC_LALT, KC_LSFT, KC_SPC, KC_BSPC, MO(_SYM), MO(_NUM)
+    KC_LALT, KC_LSFT, KC_SPC, LT(_NUM,KC_BSPC), MO(_SYM), KC_LGUI
     ),
 
 };
@@ -55,9 +56,4 @@ const key_override_t tilde_esc_override = ko_make_basic(MOD_MASK_SHIFT, KC_ESC, 
 // GUI + esc = `
 const key_override_t grave_esc_override = ko_make_basic(MOD_MASK_GUI, KC_ESC, KC_GRV);
 
-const key_override_t **key_overrides = (const key_override_t *[]){
-	&tilde_esc_override,
-	&grave_esc_override,
-    &delete_key_override,
-	NULL
-};
+#include "combos.c"
