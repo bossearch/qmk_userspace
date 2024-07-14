@@ -3,4 +3,4 @@ VIA_ENABLE      = yes    # Enable VIA
 LTO_ENABLE      = yes
 KEY_OVERRIDE_ENABLE = yes
 OLED_ENABLE = yes
-COMBO_ENABLE = yes
+#COMBO_ENABLE = yes
