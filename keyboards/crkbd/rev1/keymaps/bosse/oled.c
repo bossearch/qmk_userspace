@@ -19,33 +19,44 @@ void render_lock_status(led_t led_state) {
     oled_write_P(led_state.caps_lock ? PSTR("CAPS\n") : PSTR("    \n"), false);
 }
 
+// void render_layer_status(void) {
+//     switch (get_highest_layer(layer_state)) {
+//         case _QWERTY:
+//             oled_write("QWERTY", false);
+//             break;
+//         case _SYM:
+//             oled_write("SYMBOL", false);
+//             break;
+//         case _NUM:
+//             oled_write("NUMBER", false);
+//             break;
+//         case _NAV:
+//             oled_write("NAVKEY", false);
+//             break;
+//         case _GAME:
+//             oled_write("GAMING", false);
+//             break;
+//         default:
+//             oled_write("OTHERS", false);
+//     }
+// }
+
 void render_layer_status(void) {
-    switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
-            oled_write("QWR", false);
-            break;
-        case _SYM:
-            oled_write("SYM", false);
-            break;
-        case _NUM:
-            oled_write("NUM", false);
-            break;
-        case _NAV:
-            oled_write("NAV", false);
-            break;
-        case _GAME:
-            oled_write("AFK", false);
-            break;
-        default:
-            oled_write("UNK", false);
-    }
+    oled_write_ln_P(PSTR("LAYER"), false);
+    oled_write_ln_P(PSTR("QWE"), layer_state_is(_QWERTY));
+    oled_write_ln_P(PSTR("SYM"), layer_state_is(_SYM));
+    oled_write_ln_P(PSTR("NUM"), layer_state_is(_NUM));
+    oled_write_ln_P(PSTR("NAV"), layer_state_is(_NAV));
+    oled_write_ln_P(PSTR("AFK"), layer_state_is(_GAME));
 }
+
+
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        render_lock_status(host_keyboard_led_state());
-        render_mod_status(get_mods() | get_oneshot_mods());
-        oled_set_cursor(0, 15);
+//        render_lock_status(host_keyboard_led_state());
+//        render_mod_status(get_mods() | get_oneshot_mods());
+//        oled_set_cursor(0, 15);
         render_layer_status();
     } else {
         oled_write_P(font_logo, false);
