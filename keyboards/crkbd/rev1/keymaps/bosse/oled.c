@@ -1,5 +1,12 @@
-#ifdef OLED_ENABLE
+#pragma once
+
+#include "progmem.h"
 #include "oled_assets.h"
+
+extern uint8_t is_master;
+static uint32_t oled_timer = 0;
+static char keylog_str[6] = {};
+static uint16_t log_timer = 0;
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;
@@ -18,7 +25,7 @@ static const char PROGMEM gui_on_2[] = {0xad, 0xae, 0};
 
 static const char PROGMEM alt_off_1[] = {0x87, 0x88, 0};
 static const char PROGMEM alt_off_2[] = {0xa7, 0xa8, 0};
-static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};
+static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};    
 static const char PROGMEM alt_on_2[] = {0xaf, 0xb0, 0};
 
 static const char PROGMEM ctrl_off_1[] = {0x89, 0x8a, 0};
@@ -40,7 +47,6 @@ static const char PROGMEM off_on_1[] = {0xc9, 0};
 static const char PROGMEM off_on_2[] = {0xca, 0};
 static const char PROGMEM on_on_1[] = {0xcb, 0};
 static const char PROGMEM on_on_2[] = {0xcc, 0};
-
 
 void render_mod_status_gui_alt(uint8_t modifiers) {
    
@@ -89,18 +95,7 @@ void render_mod_status_gui_alt(uint8_t modifiers) {
     }
 }
 
-
 void render_mod_status_ctrl_shift(uint8_t modifiers) {
-
-    // // fillers between the modifier icons bleed into the icon frames
-    // static const char PROGMEM off_off_1[] = {0xc5, 0};
-    // static const char PROGMEM off_off_2[] = {0xc6, 0};
-    // static const char PROGMEM on_off_1[] = {0xc7, 0};
-    // static const char PROGMEM on_off_2[] = {0xc8, 0};
-    // static const char PROGMEM off_on_1[] = {0xc9, 0};
-    // static const char PROGMEM off_on_2[] = {0xca, 0};
-    // static const char PROGMEM on_on_1[] = {0xcb, 0};
-    // static const char PROGMEM on_on_2[] = {0xcc, 0};
 
     if(modifiers & MOD_MASK_CTRL) {
         oled_write_P(ctrl_on_1, false);
@@ -151,70 +146,91 @@ void render_layer_state(void) {
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
             oled_write(" QWR", false);
-            oled_set_cursor(0, 1);
+            oled_set_cursor(0, 6);
             oled_write_raw_P(layer0, sizeof(layer0));
             break;
         case _SYM:
             oled_write(" SYM", false);
-            oled_set_cursor(0, 1);
-            oled_write_raw_P(layer2, sizeof(layer2));
+            oled_set_cursor(0, 6);
+            oled_write_raw_P(layer1, sizeof(layer1));
             break;
         case _NUM:
             oled_write(" NUM", false);
-            oled_set_cursor(0, 1);
-            oled_write_raw_P(layer3, sizeof(layer3));
+            oled_set_cursor(0, 6);
+            oled_write_raw_P(layer2, sizeof(layer2));
             break;
         case _NAV:
             oled_write(" NAV", false);
-            oled_set_cursor(0, 1);
-            oled_write_raw_P(layer4, sizeof(layer4));
+            oled_set_cursor(0, 6);
+            oled_write_raw_P(layer3, sizeof(layer3));
             break;
         case _GAME:
             oled_write(" AFK", false);
-            oled_set_cursor(0, 1);
-            oled_write_raw_P(layer1, sizeof(layer1));
+            oled_set_cursor(0, 6);
+            oled_write_raw_P(layer4, sizeof(layer4));
             break;
         default:
             oled_write(" UNK", false);
     }
 }
 
-// void render_status_main(void) {
-//     render_mod_status_gui_alt(get_mods()|get_oneshot_mods());
-//     render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
-// //    render_layer_state();
-// }
+void add_keylog(uint16_t keycode) {
+    if ((keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX) || (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX) || (keycode >= QK_MODS && keycode <= QK_MODS_MAX)) {
+        keycode = keycode & 0xFF;
+    } else if (keycode > 0xFF) {
+        keycode = 0;
+    }
 
-// void render_status_secondary(void) {
-//     oled_write_P(font_logo, false);
-//     oled_write("corne", false);
-//     oled_set_cursor(0, 14);
-//     oled_write("crkbd", false);
-//     oled_set_cursor(0, 15);
-//     oled_write("bosse", false);
-// }
+    for (uint8_t i = 4; i > 0; --i) {
+        keylog_str[i] = keylog_str[i - 1];
+    }
 
+    if (keycode < (sizeof(code_to_name) / sizeof(char))) {
+        keylog_str[0] = pgm_read_byte(&code_to_name[keycode]);
+    }
 
-
-bool oled_task_user(void) {
-    if (is_keyboard_master()) {
-//        render_lock_status(host_keyboard_led_state());
-//        render_mod_status(get_mods() | get_oneshot_mods());
-//        oled_set_cursor(0, 15);
-//        oled_set_cursor(0, 1);
-        render_layer_state();
-    } else {
-        oled_write_P(font_logo, false);
-        oled_write("corne", false);
-        oled_set_cursor(0, 7);
-        //oled_write_P(render_mod_status_gui_alt, false);
-        // oled_write_P(render_mod_status_ctrl_shift, false);
-        oled_set_cursor(0, 14);
-        oled_write("crkbd", false);
-        oled_set_cursor(0, 15);
-        oled_write("bosse", false);
-    } 
-    return false;
+    log_timer = timer_read();
 }
 
-#endif
+void update_log(void) {
+    if (timer_elapsed(log_timer) > 750) {
+        //add_keylog(0);
+    }
+}
+
+void render_keylogger_status(void) {
+    oled_write_P(PSTR("KLOG:"), false);
+    oled_write(keylog_str, false);
+}
+
+void render_animation(uint8_t frame) {
+    oled_write_raw_P(animation[frame], sizeof(animation[frame]));
+}
+
+void render_status_main(void) {
+    render_mod_status_gui_alt(get_mods()|get_oneshot_mods());
+    render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
+    oled_set_cursor(0, 5);
+    render_layer_state();
+    oled_set_cursor(0, 13);
+    render_keylogger_status();
+}
+
+void render_status_secondary(void) {
+    oled_write_P(font_logo, false);
+    oled_write("corne", false);
+    oled_set_cursor(0, 14);
+    oled_write("crkbd", false);
+    oled_set_cursor(0, 15);
+    oled_write("bosse", false);
+}
+
+bool oled_task_user(void) {
+    update_log();
+    if (is_keyboard_master()) {
+        render_status_main();
+    } else {
+        render_status_secondary();
+    }
+    return false;
+}
