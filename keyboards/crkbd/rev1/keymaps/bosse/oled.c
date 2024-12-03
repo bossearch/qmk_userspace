@@ -13,8 +13,8 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 static const char PROGMEM font_logo[16] = {
-    0x80, 0x81, 0x82, 0x83, 0x84, 
-    0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 
+    0x80, 0x81, 0x82, 0x83, 0x84,
+    0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
     0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0
 };
 
@@ -25,7 +25,7 @@ static const char PROGMEM gui_on_2[] = {0xad, 0xae, 0};
 
 static const char PROGMEM alt_off_1[] = {0x87, 0x88, 0};
 static const char PROGMEM alt_off_2[] = {0xa7, 0xa8, 0};
-static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};    
+static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};
 static const char PROGMEM alt_on_2[] = {0xaf, 0xb0, 0};
 
 static const char PROGMEM ctrl_off_1[] = {0x89, 0x8a, 0};
@@ -49,7 +49,7 @@ static const char PROGMEM on_on_1[] = {0xcb, 0};
 static const char PROGMEM on_on_2[] = {0xcc, 0};
 
 void render_mod_status_gui_alt(uint8_t modifiers) {
-   
+
     if(modifiers & MOD_MASK_GUI) {
         oled_write_P(gui_on_1, false);
     } else {
