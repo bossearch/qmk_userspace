@@ -1,9 +1,9 @@
-MOUSEKEY_ENABLE 		= yes
-VIA_ENABLE      		= no
-LTO_ENABLE      		= yes
-KEY_OVERRIDE_ENABLE		= yes
-COMBO_ENABLE 			= yes
-EXTRAKEY_ENABLE			= yes # Audio control and System control(+450)
+MOUSEKEY_ENABLE     = yes
+VIA_ENABLE          = no
+LTO_ENABLE          = yes
+KEY_OVERRIDE_ENABLE = no
+COMBO_ENABLE        = yes
+EXTRAKEY_ENABLE     = yes # Audio control and System control(+450)
 CONSOLE_ENABLE      = no  # Console for debug(+400)
 COMMAND_ENABLE      = no  # Commands for debug and configuration
 NKRO_ENABLE         = yes # Nkey Rollover
