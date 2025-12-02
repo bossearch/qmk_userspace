@@ -1,6 +1,6 @@
 enum combos { GAME_COMBO, QWERTY_COMBO };
 
-const uint16_t PROGMEM game_combo_keys[]   = {KC_MEH, KC_G, COMBO_END};
+const uint16_t PROGMEM game_combo_keys[]   = {KC_RALT, KC_G, COMBO_END};
 const uint16_t PROGMEM qwerty_combo_keys[] = {KC_ESC, KC_G, COMBO_END};
 const uint16_t PROGMEM swap_ctrl_gui[]     = {KC_LCTL, KC_LGUI, COMBO_END};
 
@@ -15,26 +15,18 @@ bool process_combo_key_release(uint16_t combo_index, combo_t *combo, uint8_t key
     switch (combo_index) {
         case GAME_COMBO:
             if (key_index == 0 || key_index == 1) {
-                /*if (keycode == KC_MEH || keycode == KC_G) {*/
-                register_code(KC_LCTL);
-                register_code(KC_LALT);
-                register_code(KC_LSFT);
+                /*if (keycode == KC_RALT || keycode == KC_G) {*/
+                register_code(KC_RALT);
                 tap_code(KC_G);
-                unregister_code(KC_LCTL);
                 unregister_code(KC_LALT);
-                unregister_code(KC_LSFT);
             }
             return true;
         case QWERTY_COMBO:
             if (key_index == 0 || key_index == 1) {
                 /*if (keycode == KC_ESC || keycode == KC_G) {*/
-                register_code(KC_LCTL);
-                register_code(KC_LALT);
-                register_code(KC_LSFT);
+                register_code(KC_RALT);
                 tap_code(KC_G);
-                unregister_code(KC_LCTL);
-                unregister_code(KC_LALT);
-                unregister_code(KC_LSFT);
+                unregister_code(KC_RALT);
             }
             return true;
     }
