@@ -2,6 +2,7 @@
 #include "layers.h"
 #include "oled.c"
 #include "macros.c" //Refer to macros-example.c if you want to use macro. If you don't, go to line 60 ish instead.
+#include "rawhid.c"
 
 #define NAV_TAB LT(_NAV,KC_TAB)
 #define SYM_SPC LT(_SYM,KC_SPC)
@@ -9,7 +10,8 @@
 #define SYM_ESC LT(_SYM,KC_ESC)
 #define OSM_LSFT OSM(MOD_LSFT)
 #define OSM_LALT OSM(MOD_LALT)
-#define ALT_ESC ALT_T(KC_ESC)
+#define LALT_ESC LALT_T(KC_ESC)
+#define RALT_ESC RALT_T(KC_ESC)
 #define KC_RAG RAG(KC_NO)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -18,21 +20,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     NAV_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_GRV,
     KC_RALT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
     KC_RAG, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_ENT,
-    KC_LCTL, ALT_ESC, SYM_SPC, NUM_BSPC, OSM_LSFT, KC_LGUI
+    KC_LCTL, LALT_ESC, SYM_SPC, NUM_BSPC, OSM_LSFT, KC_LGUI
     ),
 
 [_SYM] = LAYOUT_split_3x6_3(
     KC_TAB, KC_EXLM, KC_AT, KC_HASH, KC_LPRN, KC_CIRC, KC_BSLS, KC_RPRN, KC_MINS, KC_PLUS, KC_EQL, KC_TILD,
     KC_RALT, KC_AMPR, KC_DLR, KC_PERC, KC_LBRC, KC_UNDS, KC_PIPE, KC_RBRC, KC_SLSH, KC_ASTR, KC_COLN, KC_DQUO,
     KC_RAG, MCR0, MCR1, MCR2, KC_LCBR, KC_LT, KC_GT, KC_RCBR, KC_COMM, KC_DOT, KC_QUES, KC_ENT,
-    KC_LCTL, ALT_ESC, KC_TRNS, TMUX, KC_LSFT, KC_LGUI
+    KC_LCTL, LALT_ESC, KC_TRNS, TMUX, KC_LSFT, KC_LGUI
     ),
 
 [_NUM] = LAYOUT_split_3x6_3(
     KC_TAB, KC_1, KC_2, KC_3, KC_4, KC_5, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY, WWW,
     KC_RALT, KC_0, KC_9, KC_8, KC_7, KC_6, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_MUTE, KC_WFWD,
     KC_RAG, KC_UNDO, KC_CUT, KC_COPY, KC_PSTE, BOOK, AF4, KC_BRID, KC_BRIU, TTY1, TTY2, KC_WBAK,
-    KC_LCTL, ALT_ESC, OSM_LALT, KC_TRNS, KC_LSFT, KC_LGUI
+    KC_LCTL, LALT_ESC, OSM_LALT, KC_TRNS, KC_LSFT, KC_LGUI
     ),
 
 [_NAV] = LAYOUT_split_3x6_3(
@@ -43,8 +45,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 [_GAME] = LAYOUT_split_3x6_3(
-    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_RALT,
-    KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
+    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_GRV,
+    RALT_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_ENT,
     KC_LCTL, KC_LALT, KC_SPC, NUM_BSPC, SYM_ESC, NAV_TAB
     ),
