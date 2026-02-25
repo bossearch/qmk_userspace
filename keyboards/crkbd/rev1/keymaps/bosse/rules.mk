@@ -10,6 +10,8 @@ OLED_ENABLE = yes
 EXTRAKEY_ENABLE = yes
 # Nkey Rollover
 NKRO_ENABLE = yes
+# allows for bidirectional communication between QMK and the host computer over an HID interface
+RAW_ENABLE = yes
 # Override modifier key
 KEY_OVERRIDE_ENABLE = no
 # Support for one-handed typing without requiring a separate layer
