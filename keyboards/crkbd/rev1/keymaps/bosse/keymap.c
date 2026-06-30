@@ -1,13 +1,13 @@
 #include QMK_KEYBOARD_H
 #include "layers.h"
 #include "oled.c"
-#include "macros.c" //Refer to macros-example.c if you want to use macro. If you don't, go to line 60 ish instead.
+#include "macros.c" //Refer to macros-example.c if you want to use macro
 #include "rawhid.c"
 
-#define NAV_TAB LT(_NAV,KC_TAB)
-#define SYM_SPC LT(_SYM,KC_SPC)
-#define NUM_BSPC LT(_NUM,KC_BSPC)
-#define SYM_ESC LT(_SYM,KC_ESC)
+#define NAV_TAB LT(_NAV, KC_TAB)
+#define SYM_SPC LT(_SYM, KC_SPC)
+#define NUM_BSPC LT(_NUM, KC_BSPC)
+#define SYM_ESC LT(_SYM, KC_ESC)
 #define OSM_LSFT OSM(MOD_LSFT)
 #define OSM_LALT OSM(MOD_LALT)
 #define LALT_ESC LALT_T(KC_ESC)
